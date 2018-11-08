@@ -99,7 +99,7 @@ int main(int argc, char** argv) {
 		printf("This is the sorted array: ");
 		for(c = 0; c < n; c++) {
 
-			printf("%d ", sorted[c]);
+			printf("%d ", tmp_array[c]);
 
 			}
 
@@ -107,7 +107,7 @@ int main(int argc, char** argv) {
 		printf("\n");
 
 		/********** Clean up root **********/
-		free(sorted);
+		//free(tmp_array);
 		//free(other_array);
 
 		}
