@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
             if(recv_from < n)//scatter_v
             {
                 //recv blocked
-                printf("%i recieving from %i", world_rank, recv_from);
+                printf("%i recieving from %i\n", world_rank, recv_from);
                 MPI_Recv(tmp_array+size, size, MPI_INT, recv_from, 0, MPI_COMM_WORLD, &status);
                 merge(sub_array, tmp_array, 0, size, 2*size);
                 memcpy(tmp_array, sub_array, size);
@@ -76,7 +76,7 @@ int main(int argc, char** argv) {
         else if(world_rank%selected/2 == 0)
         {
             int send_to = world_rank-world_rank%selected;
-            printf("%i sending to %i", world_rank, send_to);
+            printf("%i sending to %i\n", world_rank, send_to);
             MPI_Isend(tmp_array, size, MPI_INT, send_to, 0, MPI_COMM_WORLD, &req);
             break;
         }
