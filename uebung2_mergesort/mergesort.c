@@ -45,10 +45,12 @@ int main(int argc, char** argv) {
 	int *sub_array = malloc(n * sizeof(int));
 	//Todo: Change with Scatter V
 	MPI_Scatter(original_array, size, MPI_INT, sub_array, size, MPI_INT, 0, MPI_COMM_WORLD);
+	printf("scattered; size: %d\n", size);
 
 	/********** Perform the mergesort on each process **********/
 	int *tmp_array = malloc(n * sizeof(int));
 	mergeSort(sub_array, tmp_array, 0, (size - 1));
+	printf("rank: %d; merge sorted sub array", world_rank);
 
 	/********** Gather the sorted subarrays into one **********/
 	/********** Fan In ***********/
@@ -64,7 +66,7 @@ int main(int argc, char** argv) {
             if(recv_from < n)//scatter_v
             {
                 //recv blocked
-                printf("%i recieving from %i\n", world_rank, recv_from);
+                printf("%d recieving from %d\n", world_rank, recv_from);
                 MPI_Recv(tmp_array+size, size, MPI_INT, recv_from, 0, MPI_COMM_WORLD, &status);
                 merge(sub_array, tmp_array, 0, size, 2*size);
                 memcpy(tmp_array, sub_array, size);
@@ -76,7 +78,7 @@ int main(int argc, char** argv) {
         else if(world_rank%selected/2 == 0)
         {
             int send_to = world_rank-world_rank%selected;
-            printf("%i sending to %i\n", world_rank, send_to);
+            printf("%d sending to %d\n", world_rank, send_to);
             MPI_Isend(tmp_array, size, MPI_INT, send_to, 0, MPI_COMM_WORLD, &req);
             break;
         }
