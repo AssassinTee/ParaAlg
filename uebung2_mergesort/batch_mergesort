@@ -3,11 +3,11 @@
 #SBATCH --ntasks=4
 #SBATCH --ntasks-per-node=4
 #SBATCH --cpus-per-task=1
-#SBATCH --output=ring_scorep-out-%j
-#SBATCH --error=ring_scorep-err-%j
+#SBATCH --output=mergesort-out-%j
+#SBATCH --error=mergesort-err-%j
 #SBATCH --time=00:00:10
 #SBATCH --partition=devel
 
 export OMP_NUM_THREADS=1
 export SCOREP_ENABLE_TRACING=true
-srun ring
+srun mergesort
