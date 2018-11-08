@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
                 //recv blocked
                 MPI_Recv(tmp_array+size, size, MPI_INT, recv_from, 0, MPI_COMM_WORLD, &status);
                 merge(sub_array, tmp_array, 0, size, 2*size);
-                copy(tmp_array, sub_array, size);
+                memcpy(tmp_array, sub_array, size);
                 size*=2;
             }
 
