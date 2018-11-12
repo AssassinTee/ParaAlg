@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
 	/********** Create and populate the array **********/
     int n;   /* Anzahl der zu sortierenden Zahlen */
     int ieing[MAXNUM];
-    int i,j,k;
+    int i,j,k, c;
 
     n=13;
     for (i=0;i<n;++i) {
@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
 	/********** Send each subarray to each process **********/
 	int *sub_array = malloc(n * sizeof(int));
 	//Todo: Change with Scatter V
-	MPI_Scatter(original_array, size, MPI_INT, sub_array, size, MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Scatter(&ieing[0], size, MPI_INT, sub_array, size, MPI_INT, 0, MPI_COMM_WORLD);
 	printf("scattered; size: %d\n", size);
 
 	/********** Perform the mergesort on each process **********/
