@@ -4,6 +4,7 @@
 #include <time.h>
 #include <mpi.h>
 #include <math.h>
+#define MAXNUM 10000
 
 void merge(int *, int *, int, int, int);
 void mergeSort(int *, int *, int, int);
@@ -11,21 +12,16 @@ void mergeSort(int *, int *, int, int);
 int main(int argc, char** argv) {
 
 	/********** Create and populate the array **********/
-	int n = atoi(argv[1]);
-	int *original_array = malloc(n * sizeof(int));
+    int n;   /* Anzahl der zu sortierenden Zahlen */
+    int ieing[MAXNUM];
+    int i,j,k;
 
-	int c;
-	srand(time(NULL));
-	printf("This is the unsorted array: ");
-	for(c = 0; c < n; c++) {
-
-		original_array[c] = rand() % n;
-		printf("%d ", original_array[c]);
-
-		}
-
-	printf("\n");
-	printf("\n");
+    n=13;
+    for (i=0;i<n;++i) {
+        ieing[i]=rand();
+        printf("%d ",ieing[i]);
+    }
+    printf("\n ");
 
 	/********** Initialize MPI **********/
 	int world_rank;
