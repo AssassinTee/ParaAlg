@@ -1,0 +1,14 @@
++ [[ hB != hxB ]]
++ XTRACE_STATE=-x
++ [[ hxB != hxB ]]
++ VERBOSE_STATE=+v
++ set +xv
++ unset XTRACE_STATE VERBOSE_STATE
++ export OMP_NUM_THREADS=1
++ OMP_NUM_THREADS=1
++ export SCOREP_ENABLE_TRACING=true
++ SCOREP_ENABLE_TRACING=true
++ srun mergesort
+srun: error: jrc0042: tasks 0,2-3: Segmentation fault
+srun: error: jrc0042: task 1: Terminated
+srun: Force Terminated job step 6507995.0
