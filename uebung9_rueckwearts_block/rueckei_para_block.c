@@ -42,10 +42,10 @@ int main(int argc, char *argv[])
             int loc_index_row = i*nb+k;//localer index i3, i-ter block, k-te spalte
             for(int col = 0; col < glob_mat_size; ++col)//iteriere über spalten
             {
-                if(j < glob_index_row)
+                if(col < glob_index_row)
                     matrix[loc_index_row][col] = 0;
                 else
-                    matrix[loc_index_row][col] = glob_mat_size-j;
+                    matrix[loc_index_row][col] = glob_mat_size-col;
             }
             vectorB[loc_index_row] = glob_index_row+1;
         }
