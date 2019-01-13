@@ -93,7 +93,8 @@ int main(int argc, char *argv[])
                 vectorX[glob_index_row] = vectorB[loc_index_row] / matrix[loc_index_row][glob_index_row];
 
                 //Update B Vektor NUR am lokalen Block
-                for(int uoff = off-1; uoff >= 0; --uoff) {//uoff = update offset
+                for(int uoff = off-1; uoff >= 0; --uoff)  //uoff = update offset
+                {
                     int loc_index_row_update = loc_index_row+uoff;
                     vectorB[loc_index_row_update] -= matrix[loc_index_row_update][glob_index_row]*vectorX[glob_index_row];
                 }
@@ -102,15 +103,15 @@ int main(int argc, char *argv[])
         /*Broadcast Block i (size=nb) an alle*/
         MPI_Bcast(&vectorX[i], nb, MPI_DOUBLE, root, MPI_COMM_WORLD);
         /* Update mit Block i */
-        if(root != world_rank) {//Root hat schon geupdatet!!!
-            for(j=0; j < local_row_num; ++j)//matrix vector mult
+        for(j=0; j < local_row_num; ++j)//matrix vector mult
+        {
+            if(world_rank == root && j*nb == i)//don't update this, it is already updated
+                continue;
+            for(int off = nb-1; off >= 0; --off)//offset in block i
             {
-                for(int off = nb-1; off >= 0; --off)//offset in block i
-                {
-                    int glob_index_row = nb*i+off;
-                    int loc_index_row = j;
-                    vectorB[loc_index_row] -= matrix[loc_index_row][glob_index_row]*vectorX[glob_index_row];
-                }
+                int glob_index_row = nb*i+off;
+                int loc_index_row = nb*j+off;
+                vectorB[loc_index_row] -= matrix[loc_index_row][glob_index_row]*vectorX[glob_index_row];
             }
         }
     }
