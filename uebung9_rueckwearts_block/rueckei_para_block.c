@@ -51,6 +51,22 @@ int main(int argc, char *argv[])
         }
     }
 
+    for(int z = 0; z < glob_mat_size; ++z)
+    {
+        MPI_Barrier(MPI_COMM_WORLD);
+        if((z/nb)%world_size == world_rank)
+        {
+            int offset = z%nb;
+            int block = (z/nb)/world_size;
+            int row = block+offset;
+            printf("%f:", world_rank);
+            for(int v = 0; v < glob_mat_size; ++v)
+            {
+                printf("  %f  ",matrix[row][v]);
+            }
+        }
+    }
+
     for(i=glob_blocks-1; i>=0; --i)
     {
         int root = i%world_size;//root ist block%world_size
