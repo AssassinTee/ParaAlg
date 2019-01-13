@@ -43,9 +43,9 @@ int main(int argc, char *argv[])
             int glob_index_row = nb*glob_block+k;//globaler zeilenindex, i-ter block, k-te zeile
             int loc_index_row = i*nb+k;//localer index i3, i-ter block, k-te spalte
 
-            if(world_rank == 0) {
+            /*if(world_rank == 0) {
                 printf("glob block: %d glob_index_row: %d loc_index_row: %d\n", glob_block, glob_index_row, loc_index_row);
-            }
+            }*/
             for(int col = 0; col < glob_mat_size; ++col)//iteriere über spalten
             {
                 if(col < glob_index_row)
@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
         }
     }
 
+    /*Prüfe eingabe Matrix, debugged und stimmt!
     for(int z = 0; z < glob_mat_size; ++z)
     {
         MPI_Barrier(MPI_COMM_WORLD);
@@ -73,6 +74,7 @@ int main(int argc, char *argv[])
             printf("\n");
         }
     }
+    */
 
     for(i=glob_blocks-1; i>=0; --i)
     {
@@ -85,7 +87,7 @@ int main(int argc, char *argv[])
             {
                 //Berechne indizies
                 int glob_index_row = nb*i+off;
-                int loc_index_row = loc_block_index+off;
+                int loc_index_row = nb*loc_block_index+off;
 
                 //Berechne Matrix vector
                 vectorX[glob_index_row] = vectorB[loc_index_row] / matrix[loc_index_row][glob_index_row];
