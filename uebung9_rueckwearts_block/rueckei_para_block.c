@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
                 //Update B Vektor NUR am lokalen Block
                 for(int uoff = off-1; uoff >= 0; --uoff)  //uoff = update offset
                 {
-                    int loc_index_row_update = loc_index_row+uoff;
+                    int loc_index_row_update = nb*loc_block_index+uoff;
                     vectorB[loc_index_row_update] -= matrix[loc_index_row_update][glob_index_row]*vectorX[glob_index_row];
                 }
             }
@@ -105,7 +105,8 @@ int main(int argc, char *argv[])
         /* Update mit Block i */
         for(j=0; j < local_row_num; ++j)//matrix vector mult
         {
-            if(world_rank == root && j*nb == i)//don't update this, it is already updated
+            int glob_block = (j/nb)/world_size;
+            if(world_rank == root && glob_block == i)//don't update this, it is already updated
                 continue;
             for(int off = nb-1; off >= 0; --off)//offset in block i
             {
