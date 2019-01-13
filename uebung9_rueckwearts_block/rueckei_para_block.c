@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
         MPI_Bcast(&vectorX[i], nb, MPI_DOUBLE, root, MPI_COMM_WORLD);
         /* Update mit Block i */
         if(root != world_rank) {//Root hat schon geupdatet!!!
-            for(j=0; j < mat_size/world_size; ++j)//matrix vector mult
+            for(j=0; j < local_row_num; ++j)//matrix vector mult
             {
                 for(int off = nb-1; off >= 0; --off)//offset in block i
                 {
@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
     if(world_rank == 0)
     {
         printf("Das Ergebnis lautet:\n");
-        for(i=0; i<mat_size; ++i)
+        for(i=0; i<glob_mat_size; ++i)
             printf("  %f  ",vectorX[i]);
         printf("\n");
     }
