@@ -38,7 +38,8 @@ int main(int argc, char *argv[])
     {
         for(int k = 0; k < nb; ++k)  //iteriere über zeilen im block
         {
-            int glob_index_row = i*local_blocks+k;//globaler zeilenindex, i-ter block, k-te zeile
+            int glob_block = i*world_size+world_rank;
+            int glob_index_row = nb*glob_block+k;//globaler zeilenindex, i-ter block, k-te zeile
             int loc_index_row = i*nb+k;//localer index i3, i-ter block, k-te spalte
             for(int col = 0; col < glob_mat_size; ++col)//iteriere über spalten
             {
@@ -59,7 +60,7 @@ int main(int argc, char *argv[])
             int offset = z%nb;
             int block = (z/nb)/world_size;
             int row = block+offset;
-            printf("%f:", world_rank);
+            printf("%f (B%f,Z%f):", world_rank, block, row);
             for(int v = 0; v < glob_mat_size; ++v)
             {
                 printf("  %f  ",matrix[row][v]);
