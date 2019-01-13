@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     int glob_blocks = glob_mat_size/nb;
     int local_blocks = glob_blocks/world_size;
     int local_row_num = local_blocks*nb;
-    double matrix[local_row_num][mat_size];
+    double matrix[local_row_num][glob_mat_size];
     double vectorX[glob_mat_size];
     double vectorB[local_row_num];
 
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     {
         for(int k = 0; k < nb; ++k)  //iteriere über zeilen im block
         {
-            int glob_index_row = i*blocks+k;//globaler index i2, i-ter block, k-te zeile
+            int glob_index_row = i*local_blocks+k;//globaler zeilenindex, i-ter block, k-te zeile
             int loc_index_row = i*nb+k;//localer index i3, i-ter block, k-te spalte
             for(int col = 0; col < glob_mat_size; ++col)//iteriere über spalten
             {
@@ -47,11 +47,11 @@ int main(int argc, char *argv[])
                 else
                     matrix[loc_index_row][col] = glob_mat_size-j;
             }
-            vectorB[loc_index_row] = i2+1;
+            vectorB[loc_index_row] = glob_index_row+1;
         }
     }
 
-    for(i=blocks-1; i>=0; --i)
+    for(i=glob_blocks-1; i>=0; --i)
     {
         int root = i%world_size;//root ist block%world_size
         int loc_block_index = i/world_size;//i2 ist der i-te block vom root prozess
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
                 vectorX[glob_index_row] = vectorB[loc_index_row] / matrix[loc_index_row][glob_index_row];
 
                 //Update B Vektor NUR am lokalen Block
-                for(uoff = off-1; uoff >= 0; --uoff) {//uoff = update offset
+                for(int uoff = off-1; uoff >= 0; --uoff) {//uoff = update offset
                     int loc_index_row_update = loc_index_row+uoff;
                     vectorB[loc_index_row_update] -= matrix[loc_index_row_update][glob_index_row]*vectorX[glob_index_row];
                 }
