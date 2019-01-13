@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
             int offset = z%nb;
             int block = (z/nb)/world_size;
             int row = block+offset;
-            printf("%f (B%d,Z%d):", world_rank, block, row);
+            printf("%d (B%d,Z%d):", world_rank, block, row);
             for(int v = 0; v < glob_mat_size; ++v)
             {
                 printf("  %f  ",matrix[row][v]);
