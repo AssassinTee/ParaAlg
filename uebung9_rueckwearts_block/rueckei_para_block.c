@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
             }
         }
         /*Broadcast Block i (size=nb) an alle*/
-        MPI_Bcast(&vectorX[i], nb, MPI_DOUBLE, root, MPI_COMM_WORLD);
+        MPI_Bcast(&vectorX[i*nb], nb, MPI_DOUBLE, root, MPI_COMM_WORLD);
         /* Update mit Block i */
         for(j=0; j < local_row_num; ++j)//matrix vector mult
         {
