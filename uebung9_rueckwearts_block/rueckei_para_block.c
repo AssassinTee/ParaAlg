@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
         /* Update mit Block i */
         for(j=0; j < local_row_num; ++j)//matrix vector mult
         {
-            int glob_block = (j/nb)/world_size;
+            int glob_block = (j/nb)*world_size;
             if(world_rank == root && glob_block == i)//don't update this, it is already updated
                 continue;
             for(int off = nb-1; off >= 0; --off)//offset in block i
