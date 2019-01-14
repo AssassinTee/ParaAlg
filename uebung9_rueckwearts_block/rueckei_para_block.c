@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
             printf("  %f  ",vectorX[i]);
         printf("\n");
         for(i=0; i<glob_mat_size; ++i) {
-            if(i < glob_mat_size-1 && vectorX[i] == -1.0/(glob_mat_size-i))
+            if((i < glob_mat_size-1 && vectorX[i] == -1.0/(glob_mat_size-i)) || (i == glob_mat_size-1 && vectorX[i] == 1.0*glob_mat_size))
                 continue;
             else
                 printf("Zeile %d ist falsch! %f != %f\n", i, vectorX[i], -1.0/(glob_mat_size-i));
