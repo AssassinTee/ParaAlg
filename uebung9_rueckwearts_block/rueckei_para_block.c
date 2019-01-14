@@ -8,6 +8,9 @@
 #include <stdio.h>
 #include <mpi.h>
 
+#define STR_HELPER(x) #x
+#define STR(x) STR_HELPER(x)
+
 #ifndef glob_mat_size
 #define glob_mat_size 16
 #endif
@@ -15,6 +18,9 @@
 #ifndef nb
 #define nb 2
 #endif
+
+#pragma message "content of glob_mat_size: " STR(glob_mat_size)
+#pragma message "content of nb: " STR(nb)
 
 int main(int argc, char *argv[])
 {
