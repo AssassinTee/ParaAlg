@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
             for(int off = nb-1; off >= 0; --off)//offset in block i
             {
                 int glob_index_row = nb*i+off;
-                int loc_index_row = nb*j+off;
+                int loc_index_row = j;//nb*j+off;
                 vectorB[loc_index_row] -= matrix[loc_index_row][glob_index_row]*vectorX[glob_index_row];
             }
         }
