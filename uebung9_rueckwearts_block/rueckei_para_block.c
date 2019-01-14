@@ -7,8 +7,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <mpi.h>
+
+#ifndef glob_mat_size
 #define glob_mat_size 16
+#endif
+
+#ifndef nb
 #define nb 2
+#endif
+
 int main(int argc, char *argv[])
 {
     int i, j;
