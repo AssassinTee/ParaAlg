@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
     }
 
     /*Prüfe eingabe Matrix, debugged und stimmt!*/
-    for(int z = 0; z < glob_mat_size; ++z)
+    /*for(int z = 0; z < glob_mat_size; ++z)
     {
         MPI_Barrier(MPI_COMM_WORLD);
         if((z/nb)%world_size == world_rank)
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
             }
             printf("\n");
         }
-    }
+    }*/
 
     for(i=glob_blocks-1; i>=0; --i)
     {
@@ -137,6 +137,12 @@ int main(int argc, char *argv[])
         for(i=0; i<glob_mat_size; ++i)
             printf("  %f  ",vectorX[i]);
         printf("\n");
+        for(i=0; i<glob_mat_size; ++i) {
+            if(i < glob_mat_size-1 && vectorX[i] == -1/(glob_mat_size-i))
+                continue;
+            else
+                printf("Zeile %d ist falsch!%d != %d\n", i, vectorX[i], -1/(glob_mat_size-i));
+        }
     }
     /********** Finalize MPI **********/
     MPI_Barrier(MPI_COMM_WORLD);
