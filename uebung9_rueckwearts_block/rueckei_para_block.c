@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    /*Prüfe eingabe Matrix, debugged und stimmt!
+    /*Prüfe eingabe Matrix, debugged und stimmt!*/
     for(int z = 0; z < glob_mat_size; ++z)
     {
         MPI_Barrier(MPI_COMM_WORLD);
@@ -87,7 +87,6 @@ int main(int argc, char *argv[])
             printf("\n");
         }
     }
-    */
 
     for(i=glob_blocks-1; i>=0; --i)
     {
