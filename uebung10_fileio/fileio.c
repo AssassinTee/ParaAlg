@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     starts[0] = world_rank;
     MPI_Datatype mydatatype;
     MPI_Type_create_subarray(ndims, sizes, subsizes, starts, MPI_ORDER_C, MPI_CHAR, &mydatatype);
-
+    MPI_Type_commit(mydatatype);
     MPI_File_set_view(myfile, 0, MPI_CHAR, mydatatype, "native", MPI_INFO_NULL);
 
     //create text
