@@ -28,13 +28,13 @@ int main(int argc, char *argv[])
     MPI_Datatype mydatatype;
     MPI_Type_create_subarray(ndims, sizes, subsizes, starts, MPI_ORDER_C, MPI_CHAR, &mydatatype);
 
-    MPI_Set_file_view(myfile, 0, MPI_CHAR, mydatatype, "native", MPI_INFO_NULL);
+    MPI_File_set_view(myfile, 0, MPI_CHAR, mydatatype, "native", MPI_INFO_NULL);
 
     //create text
     int loop = 10;
     char text[loop];
     for(int i = 0; i < loop; ++i)
-        char text[i] = '0'+world_rank;
+        text[i] = '0'+world_rank;
 
     //write
     MPI_File_write(myfile, &text, loop, MPI_CHAR, &status);
