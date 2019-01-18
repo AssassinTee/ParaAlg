@@ -20,8 +20,24 @@ int main(int argc, char *argv[])
     MPI_File_open(MPI_COMM_WORLD, "output", MPI_MODE_WRONLY|MPI_MODE_CREATE, MPI_INFO_NULL, &myfile);
 
     //char buf[world_size];
-    char text = '0'+world_rank;
-    MPI_File_write_at(myfile, world_rank, &text, 1, MPI_CHAR, &status);
+    int ndims = 1;
+    int sizes[1], subsizes[1], starts[1];
+    sizes[0] = world_size;
+    subsizes[0] = 1;
+    starts[0] = world_rank;
+    MPI_Datatype mydatatype;
+    MPI_Type_create_subarray(ndims, sizes, subsizes, starts, MPI_ORDER_C, MPI_CHAR, &mydatatype);
+
+    MPI_Set_file_view(myfile, 0, MPI_CHAR, mydatatype, "native", MPI_INFO_NULL);
+
+    //create text
+    int loop = 10;
+    char text[loop];
+    for(int i = 0; i < loop; ++i)
+        char text[i] = '0'+world_rank;
+
+    //write
+    MPI_File_write(myfile, &text, loop, MPI_CHAR, &status);
 
     MPI_Finalize();
 }
