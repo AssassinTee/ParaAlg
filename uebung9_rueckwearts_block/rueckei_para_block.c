@@ -1,9 +1,9 @@
-/***************************************************/
-/* Kompilieren: icc -o rueckei_seq rueckei_seq.c           */
-/* Ausfuehren:  ./rueckei_seq                          */
-/* Das Ergebnis lautet:                            */
-/*   1.000000    2.000000    3.000000    4.000000  */
-/***************************************************/
+/**********************************************************************************************/
+/* Kompilieren: mpicc -o rueckei_para_block rueckei_para_block.c -Dglob_mat_size=1024 -Dnb=32 */
+/* Ausfuehren mit sbatch                                                                      */
+/* Das Ergebnis lautet:                                                                       */
+/*   1.000000    2.000000    3.000000    4.000000                                             */
+/**********************************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
 #include <mpi.h>
