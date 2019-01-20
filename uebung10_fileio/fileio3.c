@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
     for(int loc_block = 0; loc_block < loc_num_blocks; ++loc_block){//Iteriere über locale blöcke
         int glob_block_index = loc_block*world_size+world_rank;//berechne globalen Blockindex
-        for(int off = 0; offset < len_block; ++offset)//offset in local block
+        for(int off = 0; off < len_block; ++off)//offset in local block
         {
             int loc_row_index = loc_block*len_block+off;//Berechne localen vector reihen index
             int glob_row_index = glob_block_index*len_block+off;//Berechen global vector reihen index
