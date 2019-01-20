@@ -67,14 +67,15 @@ int main(int argc, char *argv[])
     MPI_File_read(myfile, &loc_vec, loc_vec_size, MPI_DOUBLE, &status);
 
     //Init buffer
-    //double *glob_vec_pointer;
+    double *glob_vec_pointer;
     if(!world_rank)
     {
         double glob_vec[len_vector];
+        glob_vec_pointer = &glob_vec[0];//why use malloc
     }
 
     //Sammel Daten
-    MPI_Gather(&loc_vec, loc_vec_size, MPI_DOUBLE, &glob_vec, len_vector, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    MPI_Gather(&loc_vec, loc_vec_size, MPI_DOUBLE, &glob_vec_pointer, len_vector, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
     //Lokale test routine
     if(!world_rank)
@@ -82,8 +83,8 @@ int main(int argc, char *argv[])
         for(int i = 0; i < len_vector; ++i)
         {
             //überprüfe ganz sauber mit schwellwert
-            if(abs(vector[i]-i-1) > 10e-10)
-                printf("line %d is wrong: %f != %d", i, vector[i], i+1);
+            if(abs(glob_vec[i]-i-1) > 10e-10)
+                printf("line %d is wrong: %f != %d", i, glob_vec[i], i+1);
         }
     }
 
