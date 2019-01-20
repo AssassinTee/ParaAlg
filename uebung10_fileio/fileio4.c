@@ -74,6 +74,13 @@ int main(int argc, char *argv[])
         glob_vec = &glob_vec_arr[0];//malloc(sizeof(double)*len_vector);//why use malloc
     }
 
+    //Debug
+    if(!world_rank)
+    {
+        for(int i = 0; i < loc_vec_size; ++i)
+            printf("line %d: %f\n", i , loc_vec[i]);
+    }
+
     //Sammel Daten
     MPI_Gather(&loc_vec, loc_vec_size, MPI_DOUBLE, glob_vec, len_vector, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
@@ -84,7 +91,7 @@ int main(int argc, char *argv[])
         {
             //überprüfe ganz sauber mit schwellwert
             if(abs(glob_vec[i]-i-1) > 10e-10)
-                printf("line %d is wrong: %f != %d", i, glob_vec[i], i+1);
+                printf("line %d is wrong: %f != %d\n", i, glob_vec[i], i+1);
         }
     }
 
