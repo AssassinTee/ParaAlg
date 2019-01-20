@@ -73,8 +73,8 @@ int main(int argc, char *argv[])
     MPI_File_set_view(myfile, 0, MPI_DOUBLE, mydatatype, "native", MPI_INFO_NULL);
 
 
-    //write
-    MPI_File_write(myfile, &loc_vec, loc_vec_size, MPI_CHAR, &status);
+    //write//Remember to use OLD TYPE
+    MPI_File_write(myfile, &loc_vec, loc_vec_size, MPI_DOUBLE, &status);
 
     MPI_Finalize();
 }
