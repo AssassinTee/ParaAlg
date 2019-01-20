@@ -1,6 +1,7 @@
 /**********************************************************************************************/
-/* Kompilieren: mpicc -o fileio fileio.c                                                      */
-/* Ausfuehren mit sbatch                                                                      */
+/* Kompilieren: mpicc -o fileio3 fileio3.c                                                    */
+/* Ausfuehren mit sbatch batch_fileio3                                                        */
+/* Mit dem Befehl 'od -e output3' lässt sich der output überprüfen!                           */
 /**********************************************************************************************/
 
 #include <stdlib.h>
