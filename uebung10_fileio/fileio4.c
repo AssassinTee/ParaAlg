@@ -21,6 +21,18 @@
 #pragma message "content of glob_mat_size: " STR(len_vector)
 #pragma message "content of nb: " STR(len_block)
 
+static void handle_error(int errcode, char *str)
+{
+    char msg[MPI_MAX_ERROR_STRING];
+    int resultlen;
+    MPI_Error_string(errcode, msg, &resultlen);
+    fprintf(stderr, "%s: %s\n", str, msg);
+    MPI_Abort(MPI_COMM_WORLD, 1);
+}
+
+#define MPI_CHECK(fn) { int errcode; errcode = (fn);\
+     if (errcode != MPI_SUCCESS) handle_error  (errcode, #fn ); }
+
 int main(int argc, char *argv[])
 {
     int world_rank, world_size;
@@ -44,8 +56,8 @@ int main(int argc, char *argv[])
     MPI_File myfile;
     MPI_Status status;
 
-    //Öffne u/o erzeuge outputdatei
-    MPI_File_open(MPI_COMM_WORLD, "output3", MPI_MODE_RDONLY|MPI_MODE_CREATE, MPI_INFO_NULL, &myfile);
+    //Öffne output datei
+    MPI_CHECK(MPI_File_open(MPI_COMM_WORLD, "output3", MPI_MODE_RDONLY, MPI_INFO_NULL, &myfile));
 
     //Initialisiere Werte für subarray
     int ndims = 1;//Vector ist 1D
@@ -64,7 +76,7 @@ int main(int argc, char *argv[])
 
 
     //read//Remember to use OLD TYPE
-    MPI_File_read(myfile, &loc_vec, loc_vec_size, MPI_DOUBLE, &status);
+    MPI_CHECK(MPI_File_read(myfile, &loc_vec, loc_vec_size, MPI_DOUBLE, &status));
 
     //Init buffer
     double *glob_vec;
