@@ -83,8 +83,8 @@ int main(int argc, char *argv[])
         for(int i = 0; i < len_vector; ++i)
         {
             //überprüfe ganz sauber mit schwellwert
-            if(abs(glob_vec[i]-i-1) > 10e-10)
-                printf("line %d is wrong: %f != %d", i, glob_vec[i], i+1);
+            if(abs(glob_vec_pointer[i]-i-1) > 10e-10)
+                printf("line %d is wrong: %f != %d", i, glob_vec_pointer[i], i+1);
         }
     }
 
