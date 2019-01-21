@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 
     for(int i = 0; i < loc_num_blocks; ++i)
     {
-        MPI_Gatherv(&loc_vec+i*len_block, len_block, MPI_DOUBLE, glob_vec+i*world_size*len_block, rcounts, displs, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+        MPI_Gatherv(loc_vec+i*len_block, len_block, MPI_DOUBLE, glob_vec+i*world_size*len_block, rcounts, displs, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     }
     printf("Gathered");
 
