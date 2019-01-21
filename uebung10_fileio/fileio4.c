@@ -78,23 +78,28 @@ int main(int argc, char *argv[])
     //read//Remember to use OLD TYPE
     MPI_CHECK(MPI_File_read(myfile, &loc_vec, loc_vec_size, MPI_DOUBLE, &status));
 
-    //Init buffer
-    double *glob_vec;
-    if(!world_rank)
-    {
-        double glob_vec_arr[len_vector];
-        glob_vec = malloc(sizeof(double)*len_vector);//why use malloc
-    }
-
     //Debug
-    if(!world_rank)
+    //if(!world_rank)
     {
         for(int i = 0; i < loc_vec_size; ++i)
-            printf("line %d: %f\n", i , loc_vec[i]);
+            printf("wr %d, line %d: %f\n",world_rank, i , loc_vec[i]);
     }
 
     //Sammel Daten
-    MPI_Gather(&loc_vec, loc_vec_size, MPI_DOUBLE, glob_vec, len_vector, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    //Init buffer
+    double *glob_vec;
+    if(!world_rank)
+        glob_vec = malloc(sizeof(double)*len_vector);//why use malloc
+
+    int* displs = malloc(sizeof(int)*world_size);
+    int* rcounts = malloc(sizeof(int)*world_size);
+    for(int i=0; i < world_size; ++i)
+    {
+        displs[i] = i*len_block;
+        rcounts[i] = len_block;
+    }
+
+    MPI_Gatherv(&loc_vec, loc_vec_size, MPI_DOUBLE, glob_vec, rcounts, displs, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     printf("Gathered");
 
     //Lokale test routine
