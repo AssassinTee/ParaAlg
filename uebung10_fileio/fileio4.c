@@ -87,11 +87,11 @@ int main(int argc, char *argv[])
     }
 
     //Debug
-    if(!world_rank)
+    /*if(!world_rank)
     {
         for(int i = 0; i < loc_vec_size; ++i)
             printf("line %d: %f\n", i , loc_vec[i]);
-    }
+    }*/
 
     //Sammel Daten
     MPI_Gather(&loc_vec, loc_vec_size, MPI_DOUBLE, glob_vec, len_vector, MPI_DOUBLE, 0, MPI_COMM_WORLD);
@@ -99,12 +99,16 @@ int main(int argc, char *argv[])
     //Lokale test routine
     if(!world_rank)
     {
+        bool ok = true;
         for(int i = 0; i < len_vector; ++i)
         {
             //überprüfe ganz sauber mit schwellwert
-            if(abs(glob_vec[i]-i-1) > 10e-10)
+            if(abs(glob_vec[i]-i-1) > 10e-10) {
                 printf("line %d is wrong: %f != %d\n", i, glob_vec[i], i+1);
+                ok = false;
+            }
         }
+        printf("%s\n", (ok ? "Vector is okay!": "Vektor is not okay!"));
     }
 
     MPI_Finalize();
