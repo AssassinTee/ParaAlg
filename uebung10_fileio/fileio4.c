@@ -100,11 +100,11 @@ int main(int argc, char *argv[])
     }
 
     //Sammel world_size blöcke pro gather, loc_num_blocks mal, geht bestimmt besser mit eigenen datentypen
-    MPI_Gather(loc_vec, 1, mydatatype, glob_vec, len_vector, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    /*for(int i = 0; i < loc_num_blocks; ++i)
+    //MPI_Gather(loc_vec, 1, mydatatype, glob_vec, len_vector, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    for(int i = 0; i < loc_num_blocks; ++i)
     {
         MPI_Gatherv(loc_vec+i*len_block, len_block, MPI_DOUBLE, glob_vec+i*world_size*len_block, rcounts, displs, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-    }*/
+    }
 
     //Lokale test routine
     if(!world_rank)
