@@ -99,7 +99,10 @@ int main(int argc, char *argv[])
         rcounts[i] = len_block;
     }
 
-    MPI_Gatherv(&loc_vec, loc_vec_size, MPI_DOUBLE, glob_vec, rcounts, displs, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    for(int i = 0; i < loc_num_blocks; ++i)
+    {
+        MPI_Gatherv(&loc_vec+i*len_block, len_block, MPI_DOUBLE, glob_vec+world_size*len_block, rcounts, displs, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    }
     printf("Gathered");
 
     //Lokale test routine
