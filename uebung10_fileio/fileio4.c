@@ -1,6 +1,11 @@
 /**********************************************************************************************/
-/* Kompilieren: mpicc -o fileio4 fileio4.c                                                    */
+/* Kompilieren: mpicc -o fileio4 fileio4.c -Dlen_block=25                                     */
 /* Ausfuehren mit sbatch batch_fileio4                                                        */
+/* Mit dem Befehl 'od -e output3' lässt sich der Input überprüfen!                            */
+/* Getestet mit:                                                                              */
+/*      - Dlen_block=25, 4 procs -> 5 lokale Blöcke                                           */
+/*      - Dlen_block=125, 4 procs -> 1 lokaler Block                                          */
+/*      - Dlen_block=10, 10 procs -> 5 lokale Blöcke                                          */
 /**********************************************************************************************/
 
 #include <stdlib.h>
@@ -18,8 +23,8 @@
 #define len_block 50
 #endif
 
-#pragma message "content of glob_mat_size: " STR(len_vector)
-#pragma message "content of nb: " STR(len_block)
+#pragma message "vectorlänge: " STR(len_vector)
+#pragma message "blocklänge: " STR(len_block)
 
 static void handle_error(int errcode, char *str)
 {
