@@ -87,14 +87,15 @@ int main(int argc, char *argv[])
     }
 
     //Debug
-    /*if(!world_rank)
+    if(!world_rank)
     {
         for(int i = 0; i < loc_vec_size; ++i)
             printf("line %d: %f\n", i , loc_vec[i]);
-    }*/
+    }
 
     //Sammel Daten
     MPI_Gather(&loc_vec, loc_vec_size, MPI_DOUBLE, glob_vec, len_vector, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+    printf("Gathered");
 
     //Lokale test routine
     if(!world_rank)
@@ -108,7 +109,10 @@ int main(int argc, char *argv[])
                 err = 0;
             }
         }
-        printf("%s\n", (err ? "Vector is okay!": "Vektor is not okay!"));
+        if(err)
+            printf("Vektor is not okay!\n");
+        else
+            printf("Vector is okay!");
     }
 
     MPI_Finalize();
