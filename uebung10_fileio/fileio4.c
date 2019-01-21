@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     if(!world_rank)
     {
         double glob_vec_arr[len_vector];
-        glob_vec = &glob_vec_arr[0];//malloc(sizeof(double)*len_vector);//why use malloc
+        glob_vec = malloc(sizeof(double)*len_vector);//why use malloc
     }
 
     //Debug
