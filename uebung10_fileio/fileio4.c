@@ -99,16 +99,16 @@ int main(int argc, char *argv[])
     //Lokale test routine
     if(!world_rank)
     {
-        bool ok = true;
+        int err = 0;
         for(int i = 0; i < len_vector; ++i)
         {
             //überprüfe ganz sauber mit schwellwert
             if(abs(glob_vec[i]-i-1) > 10e-10) {
                 printf("line %d is wrong: %f != %d\n", i, glob_vec[i], i+1);
-                ok = false;
+                err = 0;
             }
         }
-        printf("%s\n", (ok ? "Vector is okay!": "Vektor is not okay!"));
+        printf("%s\n", (err ? "Vector is okay!": "Vektor is not okay!"));
     }
 
     MPI_Finalize();
