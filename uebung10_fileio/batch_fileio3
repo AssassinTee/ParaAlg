@@ -1,0 +1,14 @@
+#!/bin/bash -x
+#SBATCH --nodes=1
+#SBATCH --ntasks=4
+#SBATCH --ntasks-per-node=4
+#SBATCH --cpus-per-task=1
+#SBATCH --output=fileio3-out-%j
+#SBATCH --error=fileio3-err-%j
+#SBATCH --time=00:00:10
+#SBATCH --partition=devel
+#SBATCH --account=vl-para
+
+export OMP_NUM_THREADS=1
+export SCOREP_ENABLE_TRACING=true
+srun fileio3

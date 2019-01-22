@@ -1,0 +1,14 @@
+#!/bin/bash -x
+#SBATCH --nodes=1
+#SBATCH --ntasks=10
+#SBATCH --ntasks-per-node=10
+#SBATCH --cpus-per-task=1
+#SBATCH --output=fileio4-out-%j
+#SBATCH --error=fileio4-err-%j
+#SBATCH --time=00:00:10
+#SBATCH --partition=devel
+#SBATCH --account=vl-para
+
+export OMP_NUM_THREADS=1
+export SCOREP_ENABLE_TRACING=true
+srun fileio4
