@@ -111,6 +111,9 @@ int main(int argc, char *argv[])
         MPI_Gatherv(loc_vec+i*len_block, len_block, MPI_DOUBLE, glob_vec+i*world_size*len_block, rcounts, displs, MPI_DOUBLE, 0, MPI_COMM_WORLD);
     }
 
+    free(displs);
+    free(rcounts);
+
     //Lokale test routine
     if(!world_rank)
     {
@@ -130,6 +133,7 @@ int main(int argc, char *argv[])
             printf("Vektor is not okay! %d correct, %d false\n", correct, err);
         else
             printf("Vector is okay! %d correct\n", correct);
+        free(glob_vec);
     }
 
     MPI_Finalize();
